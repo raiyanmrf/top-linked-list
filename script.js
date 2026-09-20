@@ -10,8 +10,11 @@ class LinkedList {
     this.head = new Node();
   }
 
+  isEmpty() {
+    return this.head.value === null && this.head.next === null;
+  }
   prepend(value) {
-    if (this.head.value === null && this.head.next === null) {
+    if (this.isEmpty()) {
       this.head = new Node(value);
       return;
     }
@@ -19,7 +22,7 @@ class LinkedList {
   }
   append(value) {
     const newNode = new Node(value);
-    if (this.head.value === null && this.head.next === null) {
+    if (this.isEmpty()) {
       this.head = newNode;
       return;
     }
@@ -43,6 +46,7 @@ class LinkedList {
     return str;
   }
   size() {
+    if (this.isEmpty()) return 0;
     let currentNode = this.head;
     let count = 0;
     while (currentNode.next !== null) {
@@ -54,16 +58,30 @@ class LinkedList {
   }
 
   getHeadValue() {
+    if (this.isEmpty()) return undefined;
     const value = this.head.value;
     return value;
   }
 
   getTailValue() {
+    if (this.isEmpty()) return undefined;
     let currentNode = this.head;
     while (currentNode.next !== null) {
       currentNode = currentNode.next;
     }
     return currentNode.value;
+  }
+
+  at(index = 0) {
+    let currentNode = this.head;
+    let count = 0;
+    while (currentNode.next !== null) {
+      if (count === index) break;
+      currentNode = currentNode.next;
+      count++;
+    }
+
+    return count === index ? currentNode.value : undefined;
   }
 }
 
@@ -77,3 +95,5 @@ console.log(linkedList.print());
 console.log("size: ", linkedList.size());
 console.log("head: ", linkedList.getHeadValue());
 console.log("tail: ", linkedList.getTailValue());
+console.log("at(2) : ", linkedList.at(2));
+console.log("at(7) : ", linkedList.at(7));
