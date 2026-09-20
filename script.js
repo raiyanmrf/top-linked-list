@@ -110,23 +110,94 @@ class LinkedList {
     if (currentNode.value === value) return count;
     return -1;
   }
+
+  pop() {
+    if (this.isEmpty()) return undefined;
+    const value = this.head.value;
+
+    if (this.head.next === null) this.head = new Node();
+    else this.head = this.head.next;
+
+    return value;
+  }
+
+  insertAt(index, ...values) {
+    if (index < 0) throw new Error("RangeError");
+
+    let currentNode = this.head;
+    let count = 0;
+    while (currentNode.next !== null) {
+      if (count === index) {
+        const next = currentNode.next;
+
+        values.forEach((item) => {
+          currentNode.next = new Node(item);
+          currentNode = currentNode.next;
+        });
+
+        if (next !== null) {
+          currentNode.next = next;
+        }
+
+        return;
+      }
+      currentNode = currentNode.next;
+      count++;
+    }
+
+    if (count === index) {
+      values.forEach((item) => {
+        currentNode.next = new Node(item);
+        currentNode = currentNode.next;
+        count++;
+      });
+
+      return;
+    }
+    if (count === index) {
+      values.forEach((item) => {
+        currentNode.next = new Node(item);
+        currentNode = currentNode.next;
+        count++;
+      });
+
+      return;
+    }
+
+    throw new Error("RangeError"); // index out of range
+  }
 }
 
 const linkedList = new LinkedList();
 
+// linkedList.append(5);
+// linkedList.append(6);
+// linkedList.append(7);
+// linkedList.prepend(1);
+// console.log(linkedList.toString());
+// console.log("size: ", linkedList.size());
+// console.log("head: ", linkedList.getHeadValue());
+// console.log("tail: ", linkedList.getTailValue());
+// console.log("at(2) : ", linkedList.at(2));
+// console.log("at(7) : ", linkedList.at(7));
+// console.log("contains(5) : ", linkedList.contains(5));
+// console.log("contains(6) : ", linkedList.contains(6));
+// console.log("contains(8) : ", linkedList.contains(8));
+// console.log("findIndex(1) : ", linkedList.findIndex(1));
+// console.log("findIndex(6) : ", linkedList.findIndex(6));
+// console.log("findIndex(8) : ", linkedList.findIndex(8));
+// console.log("pop() : ", linkedList.pop());
+// console.log("pop() : ", linkedList.pop());
+// console.log("pop() : ", linkedList.pop());
+// console.log("pop() : ", linkedList.pop());
+// console.log("pop() : ", linkedList.pop());
+// console.log("pop() : ", linkedList.pop());
 linkedList.append(5);
 linkedList.append(6);
 linkedList.append(7);
 linkedList.prepend(1);
+
 console.log(linkedList.toString());
-console.log("size: ", linkedList.size());
-console.log("head: ", linkedList.getHeadValue());
-console.log("tail: ", linkedList.getTailValue());
-console.log("at(2) : ", linkedList.at(2));
-console.log("at(7) : ", linkedList.at(7));
-console.log("contains(5) : ", linkedList.contains(5));
-console.log("contains(6) : ", linkedList.contains(6));
-console.log("contains(8) : ", linkedList.contains(8));
-console.log("findIndex(1) : ", linkedList.findIndex(1));
-console.log("findIndex(6) : ", linkedList.findIndex(6));
-console.log("findIndex(8) : ", linkedList.findIndex(8));
+
+linkedList.insertAt(3, 24, 22, 27);
+console.log(linkedList.toString());
