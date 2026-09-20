@@ -36,8 +36,9 @@ class LinkedList {
   }
 
   print() {
-    let currentNode = this.head;
     let str = "";
+    if (this.isEmpty()) return str;
+    let currentNode = this.head;
     while (currentNode.next !== null) {
       str += `[ ${currentNode.value} ]`;
       currentNode = currentNode.next;
@@ -83,6 +84,32 @@ class LinkedList {
 
     return count === index ? currentNode.value : undefined;
   }
+
+  contains(value) {
+    if (this.isEmpty()) return false;
+    let currentNode = this.head;
+    while (currentNode.next !== null) {
+      if (currentNode.value === value) return true;
+      currentNode = currentNode.next;
+    }
+
+    if (currentNode.value === value) return true;
+    return false;
+  }
+
+  findIndex(value) {
+    if (this.isEmpty()) return -1;
+    let currentNode = this.head;
+    let count = 0;
+    while (currentNode.next !== null) {
+      if (currentNode.value === value) return count;
+      currentNode = currentNode.next;
+      count++;
+    }
+
+    if (currentNode.value === value) return count;
+    return -1;
+  }
 }
 
 const linkedList = new LinkedList();
@@ -97,3 +124,9 @@ console.log("head: ", linkedList.getHeadValue());
 console.log("tail: ", linkedList.getTailValue());
 console.log("at(2) : ", linkedList.at(2));
 console.log("at(7) : ", linkedList.at(7));
+console.log("contains(5) : ", linkedList.contains(5));
+console.log("contains(6) : ", linkedList.contains(6));
+console.log("contains(8) : ", linkedList.contains(8));
+console.log("findIndex(1) : ", linkedList.findIndex(1));
+console.log("findIndex(6) : ", linkedList.findIndex(6));
+console.log("findIndex(8) : ", linkedList.findIndex(8));
