@@ -42,6 +42,29 @@ class LinkedList {
     str += `[ ${currentNode.value} ]`; // extra line for printing last node
     return str;
   }
+  size() {
+    let currentNode = this.head;
+    let count = 0;
+    while (currentNode.next !== null) {
+      count++;
+      currentNode = currentNode.next;
+    }
+    count++; // extra line for counting last node
+    return count;
+  }
+
+  getHeadValue() {
+    const value = this.head.value;
+    return value;
+  }
+
+  getTailValue() {
+    let currentNode = this.head;
+    while (currentNode.next !== null) {
+      currentNode = currentNode.next;
+    }
+    return currentNode.value;
+  }
 }
 
 const linkedList = new LinkedList();
@@ -51,3 +74,6 @@ linkedList.append(6);
 linkedList.append(7);
 linkedList.prepend(1);
 console.log(linkedList.print());
+console.log("size: ", linkedList.size());
+console.log("head: ", linkedList.getHeadValue());
+console.log("tail: ", linkedList.getTailValue());
