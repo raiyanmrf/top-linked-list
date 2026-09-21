@@ -139,46 +139,58 @@ class LinkedList {
 
   insertAt(index, ...values) {
     if (index < 0) throw new Error("RangeError: Valid Range is 0 to N");
-    if (index === 0) {
+
+    let currentNode = this.head;
+    let prev = null;
+    let count = 0;
+    let shouldInsert = false;
+    do {
+      if (count === index) {
+        shouldInsert = true;
+        break;
+      }
+      prev = currentNode;
+      currentNode = currentNode.next;
+
+      count++;
+
+      if (count === index) {
+        shouldInsert = true;
+        break;
+      }
+    } while (currentNode.next !== null);
+
+    if (shouldInsert) {
       const { head, tail } = this.chain(...values);
 
-      this.head = head;
-      return;
-    }
-    let currentNode = this.head;
-    let count = 0;
-    while (currentNode.next !== null) {
-      if (count === index - 1) {
-        const next = currentNode.next;
-
-        const { head, tail } = this.chain(...values);
-
-        if (next !== null) {
-          currentNode.next = head;
-          tail.next = next;
-        }
-
+      if (this.isEmpty()) {
+        this.head = head;
         return;
       }
-      currentNode = currentNode.next;
-      count++;
-    }
 
-    if (count === index - 1) {
-      const { head, tail } = this.chain(...values);
-      currentNode.next = head;
+      if (prev === null) {
+        tail.next = this.head;
+        this.head = head;
+        return;
+      }
 
+      if (currentNode.next === null) {
+        currentNode.next = head;
+        return;
+      }
+
+      tail.next = currentNode;
+      prev.next = head;
       return;
     }
-    // count++;
-    // if (count === index - 1) {
-    //   const { head, tail } = this.chain(...values);
-    //   currentNode.next = head;
 
-    //   return;
-    // }
+    if (count + 1 === index) {
+      const { head, tail } = this.chain(...values);
+      currentNode.next = head;
+      return;
+    }
 
-    throw new Error(`RangeError: Valid Range is 0 to ${count + 1}`); // index out of range
+    throw new Error(`RangeError: Valid Input Range is 0 to ${count + 1}`); // index out of range
   }
 }
 
@@ -215,8 +227,8 @@ linkedList.prepend(1, 2, 3, 4);
 // console.log(linkedList.toString());
 // linkedList.insertAt(4, 243, 322, 237);
 // console.log(linkedList.toString());
-linkedList.insertAt(1, "raiyan");
+linkedList.insertAt(0, "raiyan");
 console.log(linkedList.toString());
-console.log("size: ", linkedList.size());
-console.log("head: ", linkedList.getHeadValue());
-console.log("tail: ", linkedList.getTailValue());
+// console.log("size: ", linkedList.size());
+// console.log("head: ", linkedList.getHeadValue());
+// console.log("tail: ", linkedList.getTailValue());
