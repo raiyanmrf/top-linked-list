@@ -13,17 +13,33 @@ class LinkedList {
   isEmpty() {
     return this.head.value === null && this.head.next === null;
   }
-  prepend(value) {
+
+  chain(...values) {
+    let head = new Node(values[0]);
+    let current = head;
+    for (let i = 1; i < values.length; i++) {
+      const node = new Node(values[i]);
+      current.next = node;
+      current = current.next;
+    }
+
+    let tail = current;
+
+    return { head, tail };
+  }
+  prepend(...values) {
+    const { head, tail } = this.chain(...values);
     if (this.isEmpty()) {
-      this.head = new Node(value);
+      this.head = head;
       return;
     }
-    this.head = new Node(value, this.head);
+    tail.next = this.head;
+    this.head = head;
   }
-  append(value) {
-    const newNode = new Node(value);
+  append(...values) {
+    const { head, tail } = this.chain(...values);
     if (this.isEmpty()) {
-      this.head = newNode;
+      this.head = head;
       return;
     }
 
@@ -32,7 +48,7 @@ class LinkedList {
     while (currentNode.next !== null) {
       currentNode = currentNode.next;
     }
-    currentNode.next = newNode;
+    currentNode.next = head;
   }
 
   toString() {
@@ -122,21 +138,24 @@ class LinkedList {
   }
 
   insertAt(index, ...values) {
-    if (index < 0) throw new Error("RangeError");
+    if (index < 0) throw new Error("RangeError: Valid Range is 0 to N");
+    if (index === 0) {
+      const { head, tail } = this.chain(...values);
 
+      this.head = head;
+      return;
+    }
     let currentNode = this.head;
     let count = 0;
     while (currentNode.next !== null) {
-      if (count === index) {
+      if (count === index - 1) {
         const next = currentNode.next;
 
-        values.forEach((item) => {
-          currentNode.next = new Node(item);
-          currentNode = currentNode.next;
-        });
+        const { head, tail } = this.chain(...values);
 
         if (next !== null) {
-          currentNode.next = next;
+          currentNode.next = head;
+          tail.next = next;
         }
 
         return;
@@ -145,26 +164,21 @@ class LinkedList {
       count++;
     }
 
-    if (count === index) {
-      values.forEach((item) => {
-        currentNode.next = new Node(item);
-        currentNode = currentNode.next;
-        count++;
-      });
+    if (count === index - 1) {
+      const { head, tail } = this.chain(...values);
+      currentNode.next = head;
 
       return;
     }
-    if (count === index) {
-      values.forEach((item) => {
-        currentNode.next = new Node(item);
-        currentNode = currentNode.next;
-        count++;
-      });
+    // count++;
+    // if (count === index - 1) {
+    //   const { head, tail } = this.chain(...values);
+    //   currentNode.next = head;
 
-      return;
-    }
+    //   return;
+    // }
 
-    throw new Error("RangeError"); // index out of range
+    throw new Error(`RangeError: Valid Range is 0 to ${count + 1}`); // index out of range
   }
 }
 
@@ -192,12 +206,17 @@ const linkedList = new LinkedList();
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
-linkedList.append(5);
-linkedList.append(6);
-linkedList.append(7);
-linkedList.prepend(1);
+linkedList.append(5, 6, 7);
+linkedList.prepend(1, 2, 3, 4);
 
-console.log(linkedList.toString());
+// console.log(linkedList.toString());
 
-linkedList.insertAt(3, 24, 22, 27);
+// linkedList.insertAt(3, 24, 22, 27);
+// console.log(linkedList.toString());
+// linkedList.insertAt(4, 243, 322, 237);
+// console.log(linkedList.toString());
+linkedList.insertAt(1, "raiyan");
 console.log(linkedList.toString());
+console.log("size: ", linkedList.size());
+console.log("head: ", linkedList.getHeadValue());
+console.log("tail: ", linkedList.getTailValue());
