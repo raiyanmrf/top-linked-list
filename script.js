@@ -59,7 +59,7 @@ class LinkedList {
       str += `( ${currentNode.value} ) -> `;
       currentNode = currentNode.next;
     }
-    str += `( ${currentNode.value} )`; // extra line for printing last node
+    str += `( ${currentNode.value} ) -> null`; // extra line for printing last node
     return str;
   }
   size() {
@@ -218,8 +218,8 @@ const linkedList = new LinkedList();
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
-linkedList.append(5, 6, 7);
-linkedList.prepend(1, 2, 3, 4);
+// linkedList.append(5, 6, 7);
+// linkedList.prepend(1, 2, 3, 4);
 
 // console.log(linkedList.toString());
 
@@ -227,7 +227,7 @@ linkedList.prepend(1, 2, 3, 4);
 // console.log(linkedList.toString());
 // linkedList.insertAt(4, 243, 322, 237);
 // console.log(linkedList.toString());
-linkedList.insertAt(0, "raiyan");
+// linkedList.insertAt(0, "raiyan");
 console.log(linkedList.toString());
 // console.log("size: ", linkedList.size());
 // console.log("head: ", linkedList.getHeadValue());
