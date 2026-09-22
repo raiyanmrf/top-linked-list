@@ -5,7 +5,7 @@ class Node {
   }
 }
 
-class LinkedList {
+export class LinkedList {
   constructor() {
     this.head = new Node();
   }
@@ -192,9 +192,56 @@ class LinkedList {
 
     throw new Error(`RangeError: Valid Input Range is 0 to ${count + 1}`); // index out of range
   }
+
+  removeAt(index) {
+    if (index < 0) throw new Error("RangeError");
+
+    let currentNode = this.head;
+    let prev = null;
+    let count = 0;
+    let shouldRemove = false;
+    do {
+      if (count === index) {
+        shouldRemove = true;
+        break;
+      }
+      prev = currentNode;
+      currentNode = currentNode.next;
+
+      count++;
+
+      if (count === index) {
+        shouldRemove = true;
+        break;
+      }
+    } while (currentNode.next !== null);
+
+    if (currentNode !== null) throw new Error(`RangeError`);
+
+    if (shouldRemove) {
+      if (this.isEmpty()) {
+        return;
+      }
+
+      if (prev === null) {
+        this.head = currentNode.next === null ? new Node() : currentNode.next;
+        return;
+      }
+
+      if (currentNode.next === null) {
+        prev.next = null;
+        return;
+      }
+
+      prev.next = currentNode.next;
+      return;
+    }
+
+    throw new Error(`RangeError`); // index out of range
+  }
 }
 
-const linkedList = new LinkedList();
+// const linkedList = new LinkedList();
 
 // linkedList.append(5);
 // linkedList.append(6);
@@ -218,8 +265,8 @@ const linkedList = new LinkedList();
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
 // console.log("pop() : ", linkedList.pop());
-// linkedList.append(5, 6, 7);
-// linkedList.prepend(1, 2, 3, 4);
+// linkedList.append(5);
+// linkedList.prepend(1, 2);
 
 // console.log(linkedList.toString());
 
@@ -228,7 +275,24 @@ const linkedList = new LinkedList();
 // linkedList.insertAt(4, 243, 322, 237);
 // console.log(linkedList.toString());
 // linkedList.insertAt(0, "raiyan");
-console.log(linkedList.toString());
+// console.log(linkedList.toString());
 // console.log("size: ", linkedList.size());
 // console.log("head: ", linkedList.getHeadValue());
 // console.log("tail: ", linkedList.getTailValue());
+// console.log("remove at -1", linkedList.removeAt(-1));
+// console.log(linkedList.toString());
+// linkedList.removeAt(0);
+// console.log(linkedList.toString());
+// console.log("size: ", linkedList.size());
+
+// linkedList.removeAt(0);
+// console.log(linkedList.toString());
+// console.log("size: ", linkedList.size());
+
+// linkedList.removeAt(1);
+// console.log(linkedList.toString());
+// console.log("size: ", linkedList.size());
+
+// linkedList.removeAt(1);
+// console.log(linkedList.toString());
+// console.log("size: ", linkedList.size());
